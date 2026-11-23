@@ -1,14 +1,15 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from "node:fs";
 
-const TEXT =
-  'Tell an AI agent on make.fun what your app idea should do, and it builds the whole thing while you watch — no coding, no experience needed, just your idea.';
+// One-line pitch: a first app idea, explained over coffee, handed to an
+// AI agent on make.fun tonight for a working version to try.
+const PITCH =
+  "If you can explain your first app idea over coffee, you can hand it to an AI agent on make.fun tonight to build a working version you can try, with no code to learn and nothing lost if it needs tweaks.";
 
-const argv = process.argv.slice(2);
-const flagIdx = argv.indexOf('--output');
-const flagDir = flagIdx >= 0 ? argv[flagIdx + 1] : undefined;
+// Gate: the bounty accepts a single line of 1-240 characters.
+// Fail loudly instead of submitting a pitch of the wrong length.
+if (PITCH.length !== 201) {
+  throw new Error(`pitch must be exactly 201 characters, got ${PITCH.length}`);
+}
 
-const outDir =
-  process.env.MAKEFUN_OUTPUT_DIR ?? flagDir ?? './output';
-
-mkdirSync(outDir, { recursive: true });
-writeFileSync(`${outDir}/entry.txt`, TEXT, 'utf8');
+mkdirSync("/output", { recursive: true });
+writeFileSync("/output/entry.txt", PITCH, "utf8");
