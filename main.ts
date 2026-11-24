@@ -1,15 +1,16 @@
-import { mkdirSync, writeFileSync } from "node:fs";
+import { writeFileSync } from "node:fs";
 
-// One-line pitch: a first app idea, explained over coffee, handed to an
-// AI agent on make.fun tonight for a working version to try.
-const PITCH =
-  "If you can explain your first app idea over coffee, you can hand it to an AI agent on make.fun tonight to build a working version you can try, with no code to learn and nothing lost if it needs tweaks.";
+// A Day of One-Line Pitches — v3 entry.
+// One sentence (max 240 chars) to convince a friend who has never coded
+// to let an AI agent build their first app idea on make.fun.
+const pitch =
+  "Pick one thing you want your first app to do, and let's ask an AI agent to build just that on make.fun so you can try it without having to write the code yourself.";
 
-// Gate: the bounty accepts a single line of 1-240 characters.
-// Fail loudly instead of submitting a pitch of the wrong length.
-if (PITCH.length !== 201) {
-  throw new Error(`pitch must be exactly 201 characters, got ${PITCH.length}`);
+if (pitch.length > 240) {
+  throw new Error(`pitch is ${pitch.length} chars, over the 240 limit`);
 }
 
-mkdirSync("/output", { recursive: true });
-writeFileSync("/output/entry.txt", PITCH, "utf8");
+// The grader runs main.ts with no arguments and reads /output.
+// An optional first argument overrides the output path (used for testing).
+const outPath = process.argv[2] ?? "/output";
+writeFileSync(outPath, pitch, "utf8");
