@@ -1,13 +1,15 @@
 import { mkdirSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
 
-const pitch =
-  "Pick one thing you want your first app to do, and let's ask an AI agent to build just that on make.fun so you can try it without having to write the code yourself.";
+// v4: nada teman yang mendorong, bukan instruksi. v3 kalah karena
+// berbunyi seperti perintah ("pick one thing", "build just that") dan
+// kehilangan daya bujuk. v4 ini membuka dengan membangun percaya diri
+// pemula, lalu memberi kontrol ke pengguna untuk menentukan perubahan.
+const PITCH =
+  "You don't need to know how to code to know what would make your life easier, so describe your first app idea to an AI agent, let it build a version on make.fun, and try it before deciding what to change.";
 
-if (pitch.length > 240) {
-  throw new Error(`pitch too long: ${pitch.length} characters (max 240)`);
+if (PITCH.length !== 203) {
+  throw new Error(`pitch must be exactly 203 characters, got ${PITCH.length}`);
 }
 
-const outDir = process.argv[2] ?? "/output";
-mkdirSync(outDir, { recursive: true });
-writeFileSync(join(outDir, "entry.txt"), pitch, "utf8");
+mkdirSync("/output", { recursive: true });
+writeFileSync("/output/entry.txt", PITCH, "utf8");
